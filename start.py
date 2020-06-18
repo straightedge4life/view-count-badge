@@ -1,6 +1,7 @@
 from socket import *
 import xml.etree.ElementTree as Et
 import redis
+import os
 
 
 def recv_request(connection):
@@ -29,7 +30,8 @@ def edit_svg(key):
     :return:
     """
     view_num = 1
-    tree = Et.parse('./view.svg')
+    svg_file = os.path.dirname(__file__) + '/view.svg'
+    tree = Et.parse(svg_file)
     root = tree.getroot()
 
     if key:
@@ -46,14 +48,15 @@ def edit_svg(key):
     root[3][3].text = str(view_num)
 
     Et.register_namespace('', "http://www.w3.org/2000/svg")
-    tree.write('./view.svg')
-    with open('./view.svg', 'rb') as f:
+    tree.write(svg_file)
+    with open(svg_file, 'rb') as f:
         svg_string = f.read()
     return svg_string.decode()
 
 
 server_port = 12000
 server_host = '127.0.0.1'
+
 
 with socket(AF_INET, SOCK_STREAM) as s:
     s.bind((server_host, server_port))
