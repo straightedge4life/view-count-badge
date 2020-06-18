@@ -28,7 +28,7 @@ def edit_svg(key):
     :param key:
     :return:
     """
-    view_num = 0
+    view_num = 1
     tree = Et.parse('./view.svg')
     root = tree.getroot()
 
@@ -62,7 +62,7 @@ with socket(AF_INET, SOCK_STREAM) as s:
     while True:
         conn, addr = s.accept()
         request_headers, params = recv_request(conn)
-        body = edit_svg(params.get('view_svg_key'))
+        body = edit_svg(params.get('key'))
         response_header = 'Content-type: image/svg+xml; encoding=utf-8\nContent-Length: ' + str(len(body)) + '\n'
         status = 'HTTP/1.1 200 OK \n'
         conn.send(status.encode())
