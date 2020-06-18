@@ -66,7 +66,9 @@ with socket(AF_INET, SOCK_STREAM) as s:
         conn, addr = s.accept()
         request_headers, params = recv_request(conn)
         body = edit_svg(params.get('key'))
-        response_header = 'Content-type: image/svg+xml; encoding=utf-8\nContent-Length: ' + str(len(body)) + '\n'
+        response_header = 'Content-type: image/svg+xml; ' \
+                          'encoding=utf-8\nContent-Length: ' + str(len(body)) + \
+                          '\n Cache-Control: no-cache,max-age=0 \n '
         status = 'HTTP/1.1 200 OK \n'
         conn.send(status.encode())
         conn.send(response_header.encode())
