@@ -2,7 +2,7 @@
 Attach this badge on your website to statistics page views.  
 ## Requirement
 python3  
-Redis
+Redis  
 ##Usage
 `pip install -r ./requirements.txt`    
 `python start.py`    
